@@ -1,7 +1,7 @@
 # Respberry Config
 
 ## 1. Static addr
-设置静态IP <span style='color:red'>routers & domain_name_servers 不能添加/24 掩码
+其中: `routers` 与`domain_name_servers` 不能添加/24 掩码
 ```shell
 # file: /etc/dhcpcd.config
 interface eth0
