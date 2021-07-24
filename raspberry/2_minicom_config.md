@@ -70,7 +70,7 @@ $ ls -l /dev |grep serial
 # 串口测试工具
 $ sudo apt-get install minicom
 # 串口测试
-$ minicom -D ttyAMA0 -b 9600
+$ minicom -D /dev/ttyAMA0 -b 9600
 
 # gpio 查看
 $ sudo apt-get install wiringpi
