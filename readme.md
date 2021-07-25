@@ -13,4 +13,5 @@
 | file | des | update |
 |:-----|:----|:---:|
 | ./pdf/pypdf2_test.ipynb | 可读取文本信息,原本想读取出文本后翻译并写回pdf,但`pypdf2`库不支持文本直接回写| 2021-07-23 |
+| ./sqlite/sqlite_test.ipynb| 完成Sqlite封装，支持dict | 2021-07-25 |
 ### docs 笔记
