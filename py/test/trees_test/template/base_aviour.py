@@ -5,9 +5,7 @@ import time
 import atexit
 
 """
-    Emulates an external process which might accept long running planning jobs.
-    模拟可能接受长时间运行的计划作业的外部进程。
-"""
+    具体实现
 def planning(pipe_connection):
 
     idle = True
@@ -32,15 +30,18 @@ def planning(pipe_connection):
     except KeyboardInterrupt:
         pass
 
+"""
 
 class TestAviour(py_trees.behaviour.Behaviour):
-    def __init__(self, name):
+    def __init__(self, name, func):
         """
             最小的初始化。
             一个很好的经验法则是只包含与能够相关的
             初始化将此行为插入到树中以进行脱机呈现点图。
         """
         super(TestAviour, self).__init__(name)
+        self._planning = func
+
     def setup(self):
         """
             程序应主动调用，避免初始化时间过长。主要用于行为驱动初始化
@@ -49,7 +50,7 @@ class TestAviour(py_trees.behaviour.Behaviour):
         # 声明管道 parent 、 child
         self.parent_connection, self.child_connection = multiprocessing.Pipe()
         # 创建子进程 并传入 child
-        self.planning = multiprocessing.Process(target=planning, args=(self.child_connection,))
+        self.planning = multiprocessing.Process(target=self._planning, args=(self.child_connection,))
         # 设置回调,不必等待未完成任务
         atexit.register(self.planning.terminate)
         # 启动子进程
