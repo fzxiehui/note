@@ -5,41 +5,23 @@ import time
 import atexit
 
 """
-    具体实现
-def planning(pipe_connection):
+    动作节点，通过管道实现脚本调用
+        name = 动作节点本身名字
+        func = 脚本函数(实例化时输入脚本函数)
 
-    idle = True
-    try:
-        while(True):
-            # 查看连接对像是否有可以读取的数据
-            ppoll = pipe_connection.poll()
-            # print("ppoll", ppoll)
-            if ppoll:
-                # recv 获取命令 命令由 parent send
-                rec = pipe_connection.recv()
-                # 开始任务
-                idle = False
-            # 记数标记
-            if not idle:
-                print("TestAviour Sleep 10  ... ")
-                time.sleep(10)
-                pipe_connection.send(['success'])
-                idle = True
-
-            time.sleep(0.5)
-    except KeyboardInterrupt:
-        pass
-
+    setup() 在实例化后调用，可以写耗时较长的初始化，比如硬件驱动加载。
+    initialise() 在第一次tick时会被调用， 可以做数据初始化
+    update() 每一次 tick 必要会被调用, 不能阻塞
+    terminate() 在返回 SUCCESS FAILURE 时会被调用
 """
-
-class TestAviour(py_trees.behaviour.Behaviour):
+class BaseAviour(py_trees.behaviour.Behaviour):
     def __init__(self, name, func):
         """
             最小的初始化。
             一个很好的经验法则是只包含与能够相关的
             初始化将此行为插入到树中以进行脱机呈现点图。
         """
-        super(TestAviour, self).__init__(name)
+        super(BaseAviour, self).__init__(name)
         self._planning = func
 
     def setup(self):
@@ -77,8 +59,10 @@ class TestAviour(py_trees.behaviour.Behaviour):
         if self.parent_connection.poll():
             # 头取法
             self.percentage_completion = self.parent_connection.recv().pop()
-            if self.percentage_completion == 'success':
+            if self.percentage_completion == 'Success':
                 new_status = py_trees.common.Status.SUCCESS
+            elif self.percentage_completion == 'Failure':
+                new_status = py_trees.common.Status.FAILURE
 
         return new_status
 

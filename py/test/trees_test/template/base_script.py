@@ -1,6 +1,8 @@
 import time
 """
     具体实现
+        成功请返回：['Success']
+        失败请返回: ['Failure']
 """
 def planning(pipe_connection):
 
@@ -17,9 +19,9 @@ def planning(pipe_connection):
                 idle = False
             # 记数标记
             if not idle:
-                print("TestAviour Sleep 10  ... ")
-                time.sleep(10)
-                pipe_connection.send(['success'])
+                print("TestAviour Sleep 20  ... ")
+                time.sleep(20)
+                pipe_connection.send(['Success'])
                 idle = True
 
             time.sleep(0.5)

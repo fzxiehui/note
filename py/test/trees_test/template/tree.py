@@ -3,18 +3,28 @@
 
 import py_trees
 
-from base_aviour import TestAviour
+from base_aviour import BaseAviour
 
 from base_script import planning
 
 if __name__ == '__main__':
-
-    
     # py_trees.logging.level = py_trees.logging.Level.DEBUG
+    '''
+        此处添加复合器:
+            选择器(决策者) - Selector
+            顺序(工厂) - Sequence
+            并行 - Parallel
+    '''
     root = py_trees.composites.Sequence("Sequence")
-    high = TestAviour('high', planning)
-    med = TestAviour('med', planning)
-    low = TestAviour('low', planning)
+
+    '''
+        此处定义 动作列表 
+            name = 动作名字
+            planning = 计划、脚本
+    '''
+    high = BaseAviour('high', planning)
+    med = BaseAviour('med', planning)
+    low = BaseAviour('low', planning)
     root.add_children([high, med, low])
 
     behaviour_tree = py_trees.trees.BehaviourTree(
