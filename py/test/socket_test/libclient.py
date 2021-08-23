@@ -5,6 +5,12 @@ import io
 import struct
 
 
+"""
+    selector 多路复用 IO
+    socket 套接字对象
+    addr 地址
+    request 需要发送的报文
+"""
 class Message:
     def __init__(self, selector, sock, addr, request):
         self.selector = selector
