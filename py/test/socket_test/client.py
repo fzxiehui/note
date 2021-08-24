@@ -90,6 +90,8 @@ try:
         for key, mask in events:
             message = key.data
             try:
+                """ 读写标记 """
+                print("mask ===>> ", mask)
                 message.process_events(mask)
             except Exception:
                 print(

@@ -102,6 +102,7 @@ class Message:
             self.write()
 
     def read(self):
+        """  socket.recv() 读出数据  """
         self._read()
 
         if self._jsonheader_len is None:
